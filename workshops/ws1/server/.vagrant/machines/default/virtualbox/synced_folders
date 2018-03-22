@@ -1,0 +1,1 @@
+{"virtualbox":{"/home/vagrant/vagrant_data":{"guestpath":"/home/vagrant/vagrant_data","hostpath":"/Users/jitinnagpal/Documents/SE/workshops/ws1/server/vagrant_data","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/jitinnagpal/Documents/SE/workshops/ws1/server","disabled":false,"__vagrantfile":true}}}

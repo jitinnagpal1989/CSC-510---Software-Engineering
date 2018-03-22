@@ -1,0 +1,55 @@
+---
+- hosts: nodes
+  gather_facts: True
+  sudo: True
+  tasks:
+    - name: Add Nodesource Keys
+      become: yes
+      apt_key:
+        url: http://deb.nodesource.com/gpgkey/nodesource.gpg.key
+        state: present
+    
+    - name: add repo for nodesource
+      apt_repository:
+        repo: 'deb http://deb.nodesource.com/node_0.10 {{ ansible_distribution_release }} main' 
+        update_cache: yes
+
+    - name: install nodejs
+      apt: name=nodejs
+
+    - name: "Node: Install forever (to run our Node.js app)."
+      npm: name=forever global=yes state=present
+
+    - name: Create APP Directory
+      file: path=/home/vagrant/repo state=directory
+
+    - name: install  git
+      apt: name=git state=present
+
+    - name: Git clone repo 
+      git: name=https://github.com/CSC-DevOps/App.git dest="/home/vagrant/repo" clone=yes
+      
+    - name: Running NPM install
+      npm:
+        path=/home/vagrant/repo
+        state=present
+
+    - name: Run app
+      command: forever start /home/vagrant/repo/main.js 10006
+      # when: "forever_list.stdout.find('/home/vagrant/repo/main.js') == -1"
+
+    - name: Security - Ensure latest version
+      apt:
+        name: "{{item}}"
+        state: latest
+      with_items:
+        - bash
+        - openssl
+        - openssh-client
+        - openssh-server
+
+    - name: Cleanup - remove contents in tmp
+      shell: rm -rf /tmp/*
+
+
+      

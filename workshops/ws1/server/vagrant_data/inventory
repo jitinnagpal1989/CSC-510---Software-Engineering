@@ -1,0 +1,3 @@
+[nodes]
+192.168.33.100 ansible_ssh_user=vagrant ansible_ssh_private_key_file=~/.ssh/node0.key
+192.168.33.101 ansible_ssh_user=vagrant ansible_ssh_private_key_file=~/.ssh/node1.key
